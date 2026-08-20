@@ -37,3 +37,7 @@ scripts/consult-grok \
 ```
 
 Grok's response is a proposal. Reconcile it with the task evidence before changing a plan.
+
+## License
+
+Apache 2.0. See `LICENSE`.
