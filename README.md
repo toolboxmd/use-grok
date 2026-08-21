@@ -1,42 +1,23 @@
 # toolboxmd-use-grok
 
-A bounded, explicit-only skill for asking the local Grok Build CLI for a second opinion.
+A skill that teaches a host agent how to delegate to the local Grok Build CLI for research, coding, review, or a second opinion, without wrapping `grok` in an adapter.
 
-## Status
+The host writes a brief and runs `grok` with `--cwd` at the workspace and `--always-approve`. Grok sees the repo because that is its working directory. Subagents, shell, web search, and file edits stay enabled unless the user asked to restrict them.
 
-- The skill runs only when the user explicitly asks for Grok.
-- Repository mutation by Grok is outside the current scope.
-- Automatic plan review is disabled and fails closed.
-- The deterministic fake-CLI contract is tested locally.
-- No current-version real CLI acceptance is claimed.
+The skill targets local Codex and Claude Code environments where `grok` is installed. A hosted environment can use it only when the Grok executable is available there.
 
 ## Layout
 
-- `SKILL.md`: activation and reconciliation instructions.
-- `scripts/consult-grok`: provider adapter, isolation checks, redaction, and evidence output.
-- `tests/toolboxmd-use-grok.test.py`: deterministic adapter contract.
-- `tests/toolboxmd-use-grok.test.sh`: test entry point.
+- `SKILL.md`: when to consult Grok, default command, completion rules, and goal recipes.
+- `references/grok-cli.md`: Grok CLI 1.0.5 flags, tools, subagents, and session controls.
+- `agents/openai.yaml`: Codex / ChatGPT skill display name and implicit-invocation policy.
+- `tests/toolboxmd-use-grok.test.py`: portable frontmatter and workflow contract.
 
 ## Test
 
 ```bash
 bash tests/toolboxmd-use-grok.test.sh
 ```
-
-The test suite covers activation boundaries, structured output, environment isolation, secret redaction, incomplete results, timeouts, process-tree cleanup, numeric limits, and the disabled automatic mode.
-
-## Use
-
-Load `SKILL.md`, prepare a minimal prompt file, and run:
-
-```bash
-scripts/consult-grok \
-  --mode explicit \
-  --prompt-file "<brief-path>" \
-  --output-dir "<evidence-dir>"
-```
-
-Grok's response is a proposal. Reconcile it with the task evidence before changing a plan.
 
 ## License
 
