@@ -1,5 +1,5 @@
 ---
-name: toolboxmd-use-grok
+name: use-grok
 description: Delegate to the local Grok Build CLI when the user explicitly asks to ask, send, pass, delegate to, or consult Grok for research, coding, implementation, review, or a second opinion. Do not use unless the user asked to consult Grok.
 license: Apache-2.0
 compatibility: Requires a local shell and the Grok Build CLI (grok) on PATH, authenticated with grok login or XAI_API_KEY. Hosted environments work only when they provide that executable.
@@ -11,7 +11,7 @@ metadata:
 
 Run the local `grok` CLI as a full agent. Grok can read and edit the repo, run a shell, search the web, and spawn subagents. Its answer is a proposal unless the user asked it to implement.
 
-Invoke with `/toolboxmd-use-grok` in Claude Code or Grok, `$toolboxmd-use-grok` in Codex, or select the skill with `@` in ChatGPT. The host may also invoke it automatically when the user asks to consult Grok. Invocation arguments are the question; put them in the brief. Do not run unless the user asked to consult Grok.
+Invoke with `/use-grok` in Claude Code or Grok, `$use-grok` in Codex, or select the skill with `@` in ChatGPT. The host may also invoke it automatically when the user asks to consult Grok. Invocation arguments are the question; put them in the brief. Do not run unless the user asked to consult Grok.
 
 A path in the brief is a hint. Grok sees the workspace because `--cwd` points at it, not because a path was named.
 

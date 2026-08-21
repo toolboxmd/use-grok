@@ -1,18 +1,21 @@
 #!/usr/bin/env python3
-"""Contract tests for the toolboxmd-use-grok skill text."""
+"""Contract tests for the use-grok plugin and skill text."""
 
 from __future__ import annotations
 
 from pathlib import Path
+import json
 import re
 import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+SKILL_ROOT = ROOT / "skills" / "use-grok"
+SKILL = (SKILL_ROOT / "SKILL.md").read_text(encoding="utf-8")
 FRONTMATTER = SKILL.split("---", 2)[1]
-REFERENCE = (ROOT / "references/grok-cli.md").read_text(encoding="utf-8")
+REFERENCE = (SKILL_ROOT / "references/grok-cli.md").read_text(encoding="utf-8")
 README = (ROOT / "README.md").read_text(encoding="utf-8")
+PLUGIN = json.loads((ROOT / ".codex-plugin/plugin.json").read_text(encoding="utf-8"))
 
 PORTABLE_FRONTMATTER_KEYS = {
     "name",
@@ -32,6 +35,13 @@ def fm_line(key: str) -> str:
 
 
 class UseGrokSkillTests(unittest.TestCase):
+    def test_plugin_identity_matches_source_layout(self) -> None:
+        self.assertEqual(PLUGIN["name"], ROOT.name)
+        self.assertEqual(PLUGIN["name"], SKILL_ROOT.name)
+        self.assertEqual(PLUGIN["skills"], "./skills/")
+        self.assertEqual(PLUGIN["interface"]["developerName"], "toolbox.md")
+        self.assertEqual(PLUGIN["repository"], "https://github.com/toolboxmd/use-grok")
+
     def test_frontmatter_matches_current_skill_specs(self) -> None:
         top_level_keys = {
             match.group(1)
@@ -41,7 +51,7 @@ class UseGrokSkillTests(unittest.TestCase):
         self.assertNotIn("disable-model-invocation", FRONTMATTER)
         self.assertNotIn("argument-hint", FRONTMATTER)
         name = fm_line("name")
-        self.assertEqual(name, ROOT.name)
+        self.assertEqual(name, SKILL_ROOT.name)
         self.assertRegex(name, r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
         self.assertLessEqual(len(name), 64)
         description = fm_line("description")
@@ -60,14 +70,14 @@ class UseGrokSkillTests(unittest.TestCase):
         self.assertIn("short-description: Consult local Grok Build CLI", FRONTMATTER)
 
     def test_codex_openai_yaml_allows_implicit_invocation(self) -> None:
-        openai = (ROOT / "agents/openai.yaml").read_text(encoding="utf-8")
+        openai = (SKILL_ROOT / "agents/openai.yaml").read_text(encoding="utf-8")
         self.assertIn("allow_implicit_invocation: true", openai)
         self.assertIn('display_name: "Use Grok"', openai)
         self.assertIn('short_description: "Consult the local Grok Build CLI"', openai)
 
     def test_host_invocation_syntax_is_documented(self) -> None:
-        self.assertIn("`/toolboxmd-use-grok`", SKILL)
-        self.assertIn("`$toolboxmd-use-grok`", SKILL)
+        self.assertIn("`/use-grok`", SKILL)
+        self.assertIn("`$use-grok`", SKILL)
         self.assertIn("select the skill with `@` in ChatGPT", SKILL)
 
     def test_default_invocation_is_full_power_headless(self) -> None:
