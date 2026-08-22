@@ -1,0 +1,11 @@
+{
+  "raw/2026-08-21T17-23-52Z-portable-skill-frontmatter-across-openai-and-claude.md": {
+    "copied_at": "2026-08-22T07:13:11Z",
+    "last_ingested": "2026-08-22T07:13:11.186996Z",
+    "origin": "conversation",
+    "referenced_by": [
+      "concepts/portable-skill-frontmatter.md"
+    ],
+    "sha256": "76fad96962c3d96cda6c7e163e57ac778b7761538216b3b0bb0f102e83e7095e"
+  }
+}
