@@ -19,3 +19,13 @@
 ## [2026-08-22T07:24:13Z] augment | concepts/unrestricted-grok-delegation.md — personal Codex plugin packaging kept unrestricted Grok execution
 
 ## [2026-08-22T07:24:13Z] promote | selective capture generalized to main wiki: installing a local skill as a personal Codex plugin
+## [2026-08-22T07:29:57Z] create | concepts/use-grok-codex-plugin-identity.md — target Codex identity is use-grok@toolboxmd; skill stays use-grok; personal toolboxmd-use-grok@personal is a local-test install
+
+## [2026-08-22T07:29:57Z] title-scope | created sibling concepts/use-grok-codex-plugin-identity.md rather than merging marketplace/naming evidence into narrower entities/toolboxmd-use-grok-personal-codex-plugin.md (existing pages already link the old slug)
+
+## [2026-08-22T07:29:57Z] augment | entities/toolboxmd-use-grok-personal-codex-plugin.md — personal install is the migration source; uninstall only after use-grok@toolboxmd validates
+
+## [2026-08-22T07:29:57Z] augment | concepts/portable-skill-frontmatter.md — source skill name is already use-grok; plugin identity is a separate marketplace concern
+
+## [2026-08-22T07:30:25Z] promote | selective capture generalized to main wiki: Codex plugin identity uses plugin@marketplace and in-root source paths
+

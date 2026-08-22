@@ -6,18 +6,20 @@ sources:
   - raw/2026-08-21T17-23-52Z-portable-skill-frontmatter-across-openai-and-claude.md
   - raw/2026-08-21T17-23-53Z-use-grok-SKILL.md
   - raw/2026-08-21T17-51-11Z-installing-a-local-skill-as-a-personal-codex-plugin.md
+  - raw/2026-08-21T18-00-05Z-toolboxmd-marketplace-and-use-grok-naming-convention.md
 related:
   - /concepts/unrestricted-grok-delegation.md
   - /entities/toolboxmd-use-grok-personal-codex-plugin.md
+  - /concepts/use-grok-codex-plugin-identity.md
 created: "2026-08-22T07:12:19Z"
-updated: "2026-08-22T07:22:46Z"
+updated: "2026-08-22T07:28:35Z"
 quality:
   accuracy: 5
   completeness: 5
   signal: 5
   interlinking: 5
   overall: 5.0
-  rated_at: "2026-08-22T07:22:46Z"
+  rated_at: "2026-08-22T07:28:35Z"
   rated_by: ingester
 ---
 
@@ -86,5 +88,7 @@ Runtime tool approval is a separate product decision: see [Unrestricted Grok del
 ## Personal Codex plugin packaging (this repo, 2026-08-21)
 
 This skill was also installed as a personal Codex plugin so Codex can load it from the local marketplace. The plugin bundle keeps `skills/use-grok/agents/openai.yaml` with `policy.allow_implicit_invocation: true`, the same OpenAI invocation policy as the source skill. Source changes do not reach Codex until that personal plugin copy is repackaged. See [toolboxmd-use-grok personal Codex plugin](/entities/toolboxmd-use-grok-personal-codex-plugin.md).
+
+The source skill name is already `use-grok` and already matches `skills/use-grok/`. The 2026-08-21 marketplace capture says the bundled plugin skill must stay `use-grok` as well, producing `$use-grok` in Codex and `/use-grok` in Claude Code, while the installed plugin identity should be `use-grok@toolboxmd` rather than `toolboxmd-use-grok@personal`. Plugin identity is separate from SKILL.md portability. See [use-grok Codex plugin identity and ToolboxMD marketplace](/concepts/use-grok-codex-plugin-identity.md).
 
 Sources checked 2026-08-21: https://developers.openai.com/codex/skills (redirects to https://learn.chatgpt.com/docs/build-skills), https://code.claude.com/docs/en/slash-commands, https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview, https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices, https://agentskills.io/specification.
