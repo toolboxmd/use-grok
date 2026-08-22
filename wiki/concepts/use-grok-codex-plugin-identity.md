@@ -4,18 +4,21 @@ type: concepts
 tags: [agent-skills, use-grok, openai, marketplace]
 sources:
   - raw/2026-08-21T18-00-05Z-toolboxmd-marketplace-and-use-grok-naming-convention.md
+  - raw/2026-08-21T18-09-41Z-plugin.json
 related:
   - /entities/toolboxmd-use-grok-personal-codex-plugin.md
+  - /entities/use-grok-codex-plugin.md
   - /concepts/portable-skill-frontmatter.md
+  - /concepts/unrestricted-grok-delegation.md
 created: "2026-08-22T07:28:35Z"
-updated: "2026-08-22T07:28:35Z"
+updated: "2026-08-22T07:33:52Z"
 quality:
   accuracy: 5
   completeness: 5
   signal: 5
   interlinking: 5
   overall: 5.0
-  rated_at: "2026-08-22T07:28:35Z"
+  rated_at: "2026-08-22T07:33:52Z"
   rated_by: ingester
 ---
 
@@ -71,3 +74,16 @@ Sources checked 2026-08-21:
 - `/Users/lukaszmaj/dev/toolboxmd/karpathy-wiki/.agents/plugins/marketplace.json`
 - `/Users/lukaszmaj/dev/toolboxmd/karpathy-wiki/.codex-plugin/plugin.json`
 - Local Codex CLI marketplace and plugin listings
+
+## Finding 2026-08-21 (later same day): identities aligned
+
+The earlier table in this page treated the GitHub repository as allowed to remain `toolboxmd-use-grok` and treated a nested copy inside `karpathy-wiki` as the immediate local correction. A later 2026-08-21 capture records that the rename and marketplace move did happen:
+
+- Local checkout moved to `/Users/lukaszmaj/dev/toolboxmd/use-grok`.
+- Public GitHub repository is `https://github.com/toolboxmd/use-grok`. Local `origin` uses that URL.
+- The repository itself is the Codex plugin root. Manifest `.codex-plugin/plugin.json` has plugin `name: use-grok`, version `0.1.0`, `developerName: toolbox.md`.
+- Shared marketplace is `/Users/lukaszmaj/dev/toolboxmd/.agents/plugins/marketplace.json` (`name: toolboxmd`, `displayName: toolbox.md`) exposing `./karpathy-wiki` and `./use-grok`. Codex marketplace root is `/Users/lukaszmaj/dev/toolboxmd`.
+- `use-grok@toolboxmd` 0.1.0 and `karpathy-wiki@toolboxmd` 0.3.2 are installed and enabled.
+- `toolboxmd-use-grok@personal` was then removed; its package and one-entry personal marketplace were archived to Trash.
+
+Live plugin layout is [use-grok Codex plugin (ToolboxMD)](/entities/use-grok-codex-plugin.md). The personal install remains a historical record in [toolboxmd-use-grok personal Codex plugin](/entities/toolboxmd-use-grok-personal-codex-plugin.md). The three identity layers now line up: plugin `use-grok@toolboxmd`, skill `use-grok`, GitHub `toolboxmd/use-grok`.

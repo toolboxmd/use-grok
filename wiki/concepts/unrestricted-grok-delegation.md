@@ -5,18 +5,21 @@ tags: [agent-skills, grok-cli, always-approve, permissions, use-grok]
 sources:
   - raw/2026-08-21T17-23-53Z-use-grok-SKILL.md
   - raw/2026-08-21T17-51-11Z-installing-a-local-skill-as-a-personal-codex-plugin.md
+  - raw/2026-08-21T18-09-41Z-plugin.json
 related:
   - /concepts/portable-skill-frontmatter.md
   - /entities/toolboxmd-use-grok-personal-codex-plugin.md
+  - /concepts/use-grok-codex-plugin-identity.md
+  - /entities/use-grok-codex-plugin.md
 created: "2026-08-22T07:16:52Z"
-updated: "2026-08-22T07:22:46Z"
+updated: "2026-08-22T07:33:52Z"
 quality:
   accuracy: 5
   completeness: 4
   signal: 5
   interlinking: 5
   overall: 4.75
-  rated_at: "2026-08-22T07:22:46Z"
+  rated_at: "2026-08-22T07:33:52Z"
   rated_by: ingester
 ---
 
@@ -52,3 +55,5 @@ Commit `9096556259580a484661e5d08012974a444db687` on `main` (`feat: modernize Gr
 Host auto-selection of the skill is a separate decision: see [Portable SKILL.md frontmatter in use-grok](/concepts/portable-skill-frontmatter.md).
 
 The personal Codex plugin that ships this skill keeps unrestricted Grok execution. Packaging for Codex did not add a sandbox or tool allowlist. See [toolboxmd-use-grok personal Codex plugin](/entities/toolboxmd-use-grok-personal-codex-plugin.md).
+
+The 2026-08-21 repository packaging commit `3fc4615af127bd07155de1b16cc137b56e5d4059` (`feat: package use-grok plugin`) kept that same unrestricted policy in the ToolboxMD plugin root. See [use-grok Codex plugin (ToolboxMD)](/entities/use-grok-codex-plugin.md).

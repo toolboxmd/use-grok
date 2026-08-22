@@ -1,7 +1,7 @@
 {
   "raw/2026-08-21T17-23-52Z-portable-skill-frontmatter-across-openai-and-claude.md": {
     "copied_at": "2026-08-22T07:13:11Z",
-    "last_ingested": "2026-08-22T07:29:57.619015Z",
+    "last_ingested": "2026-08-22T07:35:31.200700Z",
     "origin": "conversation",
     "referenced_by": [
       "concepts/portable-skill-frontmatter.md"
@@ -10,7 +10,7 @@
   },
   "raw/2026-08-21T17-23-53Z-use-grok-SKILL.md": {
     "copied_at": "2026-08-22T07:16:52Z",
-    "last_ingested": "2026-08-22T07:29:57.619015Z",
+    "last_ingested": "2026-08-22T07:35:31.200700Z",
     "origin": "/Users/lukaszmaj/dev/toolboxmd/toolboxmd-use-grok/SKILL.md",
     "referenced_by": [
       "concepts/portable-skill-frontmatter.md",
@@ -20,7 +20,7 @@
   },
   "raw/2026-08-21T17-51-11Z-installing-a-local-skill-as-a-personal-codex-plugin.md": {
     "copied_at": "2026-08-22T07:22:44Z",
-    "last_ingested": "2026-08-22T07:29:57.619015Z",
+    "last_ingested": "2026-08-22T07:35:31.200700Z",
     "origin": "conversation",
     "referenced_by": [
       "entities/toolboxmd-use-grok-personal-codex-plugin.md",
@@ -31,7 +31,7 @@
   },
   "raw/2026-08-21T18-00-05Z-toolboxmd-marketplace-and-use-grok-naming-convention.md": {
     "copied_at": "2026-08-22T07:28:27Z",
-    "last_ingested": "2026-08-22T07:29:57.619015Z",
+    "last_ingested": "2026-08-22T07:35:31.200700Z",
     "origin": "conversation",
     "referenced_by": [
       "concepts/use-grok-codex-plugin-identity.md",
@@ -39,5 +39,18 @@
       "concepts/portable-skill-frontmatter.md"
     ],
     "sha256": "fa80a8cd90ecad3162e825e9d296fa1eb8c2287add7fbcb57e6195566c2b5894"
+  },
+  "raw/2026-08-21T18-09-41Z-plugin.json": {
+    "copied_at": "2026-08-22T07:33:45Z",
+    "last_ingested": "2026-08-22T07:35:31.200700Z",
+    "origin": "/Users/lukaszmaj/dev/toolboxmd/use-grok/.codex-plugin/plugin.json",
+    "referenced_by": [
+      "entities/use-grok-codex-plugin.md",
+      "concepts/use-grok-codex-plugin-identity.md",
+      "entities/toolboxmd-use-grok-personal-codex-plugin.md",
+      "concepts/portable-skill-frontmatter.md",
+      "concepts/unrestricted-grok-delegation.md"
+    ],
+    "sha256": "87c2c18f1387b0fedb0053cb1cf81fbf4c7b5414815c35a889d3fdbdb36346fb"
   }
 }

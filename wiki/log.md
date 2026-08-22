@@ -29,3 +29,16 @@
 
 ## [2026-08-22T07:30:25Z] promote | selective capture generalized to main wiki: Codex plugin identity uses plugin@marketplace and in-root source paths
 
+
+## [2026-08-22T07:36:35Z] create | entities/use-grok-codex-plugin.md — live ToolboxMD Codex plugin use-grok@toolboxmd 0.1.0 after checkout and GitHub rename
+
+## [2026-08-22T07:36:35Z] title-scope | created sibling entities/use-grok-codex-plugin.md rather than merging completed migration into narrower concepts/use-grok-codex-plugin-identity.md or entities/toolboxmd-use-grok-personal-codex-plugin.md (existing pages already link those slugs)
+
+## [2026-08-22T07:36:35Z] augment | concepts/use-grok-codex-plugin-identity.md — dated finding: GitHub repo renamed to toolboxmd/use-grok, marketplace moved to toolboxmd parent, identities aligned
+
+## [2026-08-22T07:36:35Z] augment | entities/toolboxmd-use-grok-personal-codex-plugin.md — personal toolboxmd-use-grok@personal removed after use-grok@toolboxmd 0.1.0 validated
+
+## [2026-08-22T07:36:35Z] augment | concepts/portable-skill-frontmatter.md — plugin-root packaging; compatibility key retained despite bundled skill validator reject
+
+## [2026-08-22T07:36:35Z] augment | concepts/unrestricted-grok-delegation.md — packaging commit 3fc4615 kept unrestricted Grok policy
+## [2026-08-22T07:36:37Z] promote | selective capture generalized to main wiki: package a Codex plugin at the repository root and align marketplace, skill, and git identities

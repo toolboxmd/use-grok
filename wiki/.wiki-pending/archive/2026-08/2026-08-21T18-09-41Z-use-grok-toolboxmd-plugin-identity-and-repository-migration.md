@@ -10,8 +10,8 @@ captured_at: "2026-08-21T18-09-41Z"
 captured_by: "in-session-agent"
 capture_id: "cap-703f257c86ca462fb2d3173f4d130783"
 promotion_policy: "selective"
-promotion_decision: null
-promotion_id: null
+promotion_decision: "promoted"
+promotion_id: "prom-67555011806fa34439cf5b32"
 propagated_from: null
 ---
 

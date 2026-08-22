@@ -5,19 +5,21 @@ tags: [agent-skills, use-grok, openai]
 sources:
   - raw/2026-08-21T17-51-11Z-installing-a-local-skill-as-a-personal-codex-plugin.md
   - raw/2026-08-21T18-00-05Z-toolboxmd-marketplace-and-use-grok-naming-convention.md
+  - raw/2026-08-21T18-09-41Z-plugin.json
 related:
   - /concepts/portable-skill-frontmatter.md
   - /concepts/unrestricted-grok-delegation.md
   - /concepts/use-grok-codex-plugin-identity.md
+  - /entities/use-grok-codex-plugin.md
 created: "2026-08-22T07:22:46Z"
-updated: "2026-08-22T07:28:35Z"
+updated: "2026-08-22T07:33:52Z"
 quality:
   accuracy: 5
   completeness: 5
   signal: 5
   interlinking: 5
   overall: 5.0
-  rated_at: "2026-08-22T07:28:35Z"
+  rated_at: "2026-08-22T07:33:52Z"
   rated_by: ingester
 ---
 
@@ -70,6 +72,10 @@ uv run --with pyyaml python <validate_plugin.py> <plugin-root>
 The personal install remains the captured local-test record. It is not the ToolboxMD distribution identity. The Grok plugin should install as `use-grok@toolboxmd`, and the bundled skill name should stay `use-grok`. Repeating `toolboxmd` in the plugin name would produce the redundant id `toolboxmd-use-grok@toolboxmd`. See [use-grok Codex plugin identity and ToolboxMD marketplace](/concepts/use-grok-codex-plugin-identity.md).
 
 Do not uninstall `toolboxmd-use-grok@personal` until `use-grok@toolboxmd` validates and installs. This is a migration of installed identity, not a rename-in-place of the personal marketplace entry.
+
+## Finding 2026-08-21 (later same day): personal install removed
+
+After `use-grok@toolboxmd` 0.1.0 installed and enabled from the ToolboxMD marketplace, the obsolete `toolboxmd-use-grok@personal` installation was removed. The personal package and the one-entry personal marketplace manifest were archived to Trash rather than deleted permanently. The live plugin is [use-grok Codex plugin (ToolboxMD)](/entities/use-grok-codex-plugin.md).
 
 ## Evidence checked 2026-08-21
 
