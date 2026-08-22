@@ -4,17 +4,19 @@ type: concepts
 tags: [agent-skills, grok-cli, always-approve, permissions, use-grok]
 sources:
   - raw/2026-08-21T17-23-53Z-use-grok-SKILL.md
+  - raw/2026-08-21T17-51-11Z-installing-a-local-skill-as-a-personal-codex-plugin.md
 related:
   - /concepts/portable-skill-frontmatter.md
+  - /entities/toolboxmd-use-grok-personal-codex-plugin.md
 created: "2026-08-22T07:16:52Z"
-updated: "2026-08-22T07:16:52Z"
+updated: "2026-08-22T07:22:46Z"
 quality:
   accuracy: 5
   completeness: 4
   signal: 5
-  interlinking: 4
-  overall: 4.5
-  rated_at: "2026-08-22T07:16:52Z"
+  interlinking: 5
+  overall: 4.75
+  rated_at: "2026-08-22T07:22:46Z"
   rated_by: ingester
 ---
 
@@ -48,3 +50,5 @@ Optional catalog details live in `skills/use-grok/references/grok-cli.md` (Grok 
 Commit `9096556259580a484661e5d08012974a444db687` on `main` (`feat: modernize Grok delegation skill`) removed the wrapper `scripts/consult-grok`, added `agents/openai.yaml`, moved volatile Grok CLI 1.0.5 details into `references/grok-cli.md`, documented ChatGPT `@`, Codex `$`, and Claude Code `/` invocation, and narrowed compatibility to environments with a local shell and `grok` executable. The focused contract suite passed 9 of 9.
 
 Host auto-selection of the skill is a separate decision: see [Portable SKILL.md frontmatter in use-grok](/concepts/portable-skill-frontmatter.md).
+
+The personal Codex plugin that ships this skill keeps unrestricted Grok execution. Packaging for Codex did not add a sandbox or tool allowlist. See [toolboxmd-use-grok personal Codex plugin](/entities/toolboxmd-use-grok-personal-codex-plugin.md).
