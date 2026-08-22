@@ -4,15 +4,18 @@ type: concepts
 tags: [agent-skills, skill-frontmatter, openai, claude, portability]
 sources:
   - raw/2026-08-21T17-23-52Z-portable-skill-frontmatter-across-openai-and-claude.md
+  - raw/2026-08-21T17-23-53Z-use-grok-SKILL.md
+related:
+  - /concepts/unrestricted-grok-delegation.md
 created: "2026-08-22T07:12:19Z"
-updated: "2026-08-22T07:12:19Z"
+updated: "2026-08-22T07:16:52Z"
 quality:
   accuracy: 5
-  completeness: 4
+  completeness: 5
   signal: 5
-  interlinking: 3
-  overall: 4.25
-  rated_at: "2026-08-22T07:12:19Z"
+  interlinking: 4
+  overall: 4.75
+  rated_at: "2026-08-22T07:16:52Z"
   rated_by: ingester
 ---
 
@@ -67,5 +70,15 @@ When changing `skills/use-grok/SKILL.md` frontmatter:
 2. Put OpenAI UI names and `policy.allow_implicit_invocation` in `agents/openai.yaml`.
 3. Do not add Claude Code-only keys to SKILL.md even if they would be convenient locally.
 4. Leave `disable-model-invocation` unset so Claude Code can still select the skill from natural-language "consult Grok" prompts, matching the OpenAI implicit-invocation policy.
+
+## Auto-invocation trigger (this repo, 2026-08-21)
+
+The host should select `use-grok` only for requests that explicitly ask to ask, send, pass, delegate to, or consult Grok. Do not select it merely because Grok might be useful. That boundary is carried by the portable `description`, not by a SKILL.md flag.
+
+Automatic selection uses host defaults rather than a non-portable SKILL.md field. There is no portable `model-invocation: true` field. OpenAI keeps `policy.allow_implicit_invocation: true` in `skills/use-grok/agents/openai.yaml`. Claude Code receives no `disable-model-invocation` field, so its documented default `false` for that disabling field applies and the model may invoke the skill. Omitting the Claude-specific field also keeps SKILL.md compatible with claude.ai and the Claude Skills API, whose upload schema rejects non-standard fields such as `disable-model-invocation` and `argument-hint`.
+
+The portable revision is commit `9096556259580a484661e5d08012974a444db687` on `main` (`feat: modernize Grok delegation skill`). It adds `agents/openai.yaml`, documents ChatGPT `@`, Codex `$`, and Claude Code `/` invocation, and narrows compatibility to environments with a local shell and `grok` executable.
+
+Runtime tool approval is a separate product decision: see [Unrestricted Grok delegation in use-grok](/concepts/unrestricted-grok-delegation.md).
 
 Sources checked 2026-08-21: https://developers.openai.com/codex/skills (redirects to https://learn.chatgpt.com/docs/build-skills), https://code.claude.com/docs/en/slash-commands, https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview, https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices, https://agentskills.io/specification.
