@@ -1,0 +1,10 @@
+{
+  "name": "use-grok",
+  "version": "0.2.0",
+  "description": "Delegate research, coding, and reviews to the local Grok Build CLI.",
+  "author": {
+    "name": "lukaszmaj"
+  },
+  "repository": "https://github.com/toolboxmd/use-grok",
+  "license": "Apache-2.0"
+}

@@ -16,6 +16,9 @@ FRONTMATTER = SKILL.split("---", 2)[1]
 REFERENCE = (SKILL_ROOT / "references/grok-cli.md").read_text(encoding="utf-8")
 README = (ROOT / "README.md").read_text(encoding="utf-8")
 PLUGIN = json.loads((ROOT / ".codex-plugin/plugin.json").read_text(encoding="utf-8"))
+CLAUDE_PLUGIN = json.loads((ROOT / ".claude-plugin/plugin.json").read_text(encoding="utf-8"))
+GROK_PLUGIN = json.loads((ROOT / ".grok-plugin/plugin.json").read_text(encoding="utf-8"))
+VERSION = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
 
 PORTABLE_FRONTMATTER_KEYS = {
     "name",
@@ -41,6 +44,11 @@ class UseGrokSkillTests(unittest.TestCase):
         self.assertEqual(PLUGIN["skills"], "./skills/")
         self.assertEqual(PLUGIN["interface"]["developerName"], "toolbox.md")
         self.assertEqual(PLUGIN["repository"], "https://github.com/toolboxmd/use-grok")
+        self.assertEqual(PLUGIN["version"], VERSION)
+        for manifest in (PLUGIN, CLAUDE_PLUGIN, GROK_PLUGIN):
+            self.assertEqual(manifest["name"], "use-grok")
+            self.assertEqual(manifest["version"], VERSION)
+        self.assertNotEqual(PLUGIN["name"], "toolboxmd-use-grok")
 
     def test_frontmatter_matches_current_skill_specs(self) -> None:
         top_level_keys = {

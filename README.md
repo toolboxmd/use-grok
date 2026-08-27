@@ -8,7 +8,7 @@ The skill targets local Codex and Claude Code environments where `grok` is insta
 
 ## Layout
 
-- `.codex-plugin/plugin.json`: Codex plugin identity and install-surface metadata.
+- `.codex-plugin/plugin.json`, `.claude-plugin/plugin.json`, `.grok-plugin/plugin.json`: plugin identity on Codex, Claude Code, and Grok Build.
 - `skills/use-grok/SKILL.md`: when to consult Grok, default command, completion rules, and goal recipes.
 - `skills/use-grok/references/grok-cli.md`: Grok CLI 1.0.5 flags, tools, subagents, and session controls.
 - `skills/use-grok/agents/openai.yaml`: Codex / ChatGPT skill display name and implicit-invocation policy.
@@ -16,11 +16,21 @@ The skill targets local Codex and Claude Code environments where `grok` is insta
 
 ## Install
 
-Install from the ToolboxMD marketplace, then start a new Codex session:
+Add marketplace toolboxmd, then install this plugin. Identity is
+`use-grok@toolboxmd`.
 
 ```bash
+codex plugin marketplace add toolboxmd/marketplace
 codex plugin add use-grok@toolboxmd
 ```
+
+```bash
+grok plugin marketplace add toolboxmd/marketplace
+grok plugin install use-grok --trust
+```
+
+Claude Code: add extraKnownMarketplaces `toolboxmd` pointing at
+`toolboxmd/marketplace`, then enable `use-grok@toolboxmd`.
 
 ## Test
 
