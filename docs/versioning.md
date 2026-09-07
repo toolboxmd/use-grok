@@ -37,6 +37,27 @@ installation, and live verification are separate authorized operations with
 their own evidence; a release alone proves none of them. Existing installation
 instructions remain in [README.md](../README.md).
 
+## Shared delivery declarations
+
+[The delivery profile](../.toolboxmd/delivery.json) declares the existing contract
+suite for changed-scope and complete proof. Its release commands require a clean
+checkout at the full commit substituted for `{sha}`. Run commands from the
+repository root in their listed order, with the shared AgentsMD `versionctl`
+executable on the proof subprocess's PATH. When using an installed plugin,
+prepend that installation's `bin` directory for the subprocess only. The shared
+`bin/delivery-profile load --root "$PROJECT_ROOT" --json` command validates the
+profile; neither shared executable nor schema is copied here.
+
+[The Project Record](../.toolboxmd/project.json) indexes the existing version,
+host manifests, Skill, documentation, requirements, and proof owners. Its schema
+and ingestion contract belong to Marketplace. Validate the record and referenced
+files from the exact candidate tree using that shared contract before release.
+
+The profile's public representation is this repository's existing GitHub README
+at `https://github.com/toolboxmd/use-grok`. It introduces no separate product site
+or artifact build. Source release, Marketplace pin, installation, loading, and
+behavioral Live Verification require separate evidence.
+
 ## Existing release history
 
 Adoption preserves the existing `0.2.0` baseline: `VERSION`, all three plugin

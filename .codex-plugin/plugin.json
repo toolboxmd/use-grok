@@ -1,6 +1,6 @@
 {
   "name": "use-grok",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Delegate research, coding, and reviews to the local Grok Build CLI.",
   "author": {
     "name": "lukaszmaj",
