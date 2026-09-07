@@ -1,6 +1,6 @@
 {
   "name": "use-grok",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Delegate research, coding, and reviews to the local Grok Build CLI.",
   "author": {
     "name": "lukaszmaj",
@@ -9,7 +9,12 @@
   "homepage": "https://github.com/toolboxmd/use-grok#readme",
   "repository": "https://github.com/toolboxmd/use-grok",
   "license": "Apache-2.0",
-  "keywords": ["grok", "xai", "delegation", "coding"],
+  "keywords": [
+    "grok",
+    "xai",
+    "delegation",
+    "coding"
+  ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Use Grok",
@@ -17,7 +22,10 @@
     "longDescription": "Delegate explicitly requested research, coding, implementation, review, and second-opinion tasks to the local Grok Build CLI with unrestricted tool permissions.",
     "developerName": "toolbox.md",
     "category": "Developer Tools",
-    "capabilities": ["Interactive", "Write"],
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
     "websiteURL": "https://github.com/toolboxmd/use-grok",
     "defaultPrompt": [
       "Ask Grok to review this implementation.",

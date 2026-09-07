@@ -38,6 +38,13 @@ Claude Code: add extraKnownMarketplaces `toolboxmd` pointing at
 bash tests/use-grok.test.sh
 ```
 
+## Project maintenance
+
+[VISION.md](VISION.md), [MISSION.md](MISSION.md), and
+[OBJECTIVE.md](OBJECTIVE.md) define Project Direction.
+[Versioning and release](docs/versioning.md) describes the canonical version,
+manifest mirrors, deterministic checks, and manual release boundary.
+
 ## License
 
 Apache 2.0. See `LICENSE`.
