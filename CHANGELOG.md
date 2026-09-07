@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.1] - 2026-09-07
+
+### Changed
+
+- Establish approved Project Direction and canonical version policy
+
 ## [0.2.0] - 2026-08-27
 
 ### Added
