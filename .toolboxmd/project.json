@@ -1,0 +1,27 @@
+{
+  "$schema": "https://raw.githubusercontent.com/toolboxmd/marketplace/v0.3.0/schemas/project-record-v1.schema.json",
+  "id": "use-grok",
+  "kind": "agent-module",
+  "outcome": "Delegate explicitly requested research, coding, and review to the local Grok Build CLI with accountable result recovery.",
+  "factSources": {
+    "version": "VERSION",
+    "delivery": {
+      "codex": ".codex-plugin/plugin.json",
+      "claude-code": ".claude-plugin/plugin.json",
+      "grok-build": ".grok-plugin/plugin.json"
+    },
+    "skills": [
+      "skills/use-grok/SKILL.md"
+    ],
+    "documentation": [
+      "README.md",
+      "docs/versioning.md"
+    ],
+    "requirements": [
+      ".toolboxmd/delivery.json"
+    ],
+    "proof": [
+      "tests/use-grok.test.sh"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://raw.githubusercontent.com/toolboxmd/agentsmd/v8.6.0/schemas/delivery-v1.schema.json",
+  "schema": 1,
+  "commands": {
+    "changedScope": [
+      "bash tests/use-grok.test.sh"
+    ],
+    "complete": [
+      "bash tests/use-grok.test.sh"
+    ],
+    "release": [
+      "bash tests/use-grok.test.sh",
+      "versionctl release-check --sha {sha}"
+    ]
+  },
+  "website": {
+    "repository": "toolboxmd/use-grok",
+    "baseUrl": "https://github.com",
+    "route": "/toolboxmd/use-grok"
+  }
+}
