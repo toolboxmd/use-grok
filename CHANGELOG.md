@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.0] - 2026-09-12
+
+### Added
+
+- Teach Grok session fork, rewind, export recovery, and a live-help tool map
+
 ## [0.2.2] - 2026-09-07
 
 ### Changed

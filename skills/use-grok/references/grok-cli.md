@@ -1,96 +1,60 @@
-# Grok Build CLI reference
+# Grok CLI when-to-use
 
-This is a working reference for Grok CLI 1.0.5. Read it only when the default invocation in `SKILL.md` is insufficient. If the installed version differs or an option fails, run `grok --help` and `grok models` and prefer the live interface.
+Last checked against `grok 1.0.30 (04b7ffed98c6) [stable]`. This is a when-to-use map, not a flag dump and not a supported-version contract. Live `grok --help` and `~/.grok/docs/user-guide/` are authoritative when they differ. Run `grok <cmd> --help` for a named subcommand.
 
-## Built-in tools
+The default consult in `SKILL.md` needs none of the extras below.
 
-The default invocation leaves these enabled.
+## Continue the same consult
 
-| Tool | What it does |
-|------|--------------|
-| `read_file` | Read a file |
-| `search_replace` | Line-precise edit |
-| `grep` | Regex search with ripgrep |
-| `list_dir` | List a directory |
-| `run_terminal_command` | Shell, using this internal tool id rather than `bash` |
-| `web_search` / `web_fetch` | Search the web or fetch a URL |
-| `todo_write` | Task list |
-| `spawn_subagent` | Child session |
-| `memory_search` | Cross-session memory |
+Use `--resume "<sessionId>"` with the prior JSON `.sessionId`. Linear follow-up keeps later history on that session.
 
-MCP tools from the user's Grok config also load. `--tools` is a headless allowlist and removes everything else. Do not pass it unless you intend to restrict Grok. `--disallowed-tools` removes named ids and wins over `--tools`.
+Find a session: `grok sessions list` or `grok sessions search <query>`.
 
-## Subagents
+## Alternate history
 
-Subagents are enabled by default. Do not pass `--no-subagents` unless the user asked to restrict Grok.
+Fork with `--resume "<sessionId>" --fork-session`. Optional `--session-id "<uuid>"` names the child. Then rewind **only the fork** with `/rewind` (alias `/undo`).
 
-| Type | Role |
-|------|------|
-| `general-purpose` | Full child agent |
-| `explore` | Search, read, and shell without editing |
-| `plan` | Implementation planning without editing |
+Do not rewind the only copy. `/rewind` truncates conversation history to an earlier user prompt; files on disk stay. See `~/.grok/docs/user-guide/17-sessions.md`.
 
-`--disallowed-tools Agent` blocks all spawning. `Agent(explore)` and `Agent(explore, plan)` block named types only.
+`-s/--session-id` creates a new UUID only. With `-r`/`-c` it is valid only with `--fork-session`.
 
-## Flags
+`--worktree` starts the session in a new git worktree. It is not combinable with `--fork-session`. `--restore-code` restores the original session's repository snapshot when resuming (remote sessions require `--worktree`).
 
-### Prompt
+## Recover the exact answer
 
-| Flag | Use |
-|------|-----|
-| `--prompt-file <path>` | Brief from a file, preferred |
-| `-p, --single <text>` | Inline prompt for a short request |
-| `--prompt-json <json>` | Content-block prompt |
-| `--verbatim` | Send the prompt exactly |
+JSON `.text` is the final answer. If the TUI or stdout looks truncated, run `grok export <sessionId>`. Do not treat a partial display as complete.
 
-### Workspace and model
+## Cost of that consult
 
-| Flag | Use |
-|------|-----|
-| `--cwd <path>` | Grok's working directory |
-| `-m, --model <id>` | Select a model; use `grok models` for the live list and default |
-| `--reasoning-effort` / `--effort` | Select the available reasoning effort |
-| `--max-turns <n>` | Cap model rounds in headless mode |
-| `--rules <text>` | Extra system-prompt rules for this run |
-| `--agent <name-or-file>` | Named agent or definition file |
+`grok usage <sessionId>` prints persisted token and cost usage for the session.
 
-### Permissions and sandbox
+## What Grok loaded for this workspace
 
-| Flag | Use |
-|------|-----|
-| `--always-approve` / `--yolo` | Auto-approve tools; intentional default for this skill |
-| `--permission-mode` | `default`, `acceptEdits`, `auto`, `dontAsk`, `bypassPermissions`, or `plan` |
-| `--allow <rule>` / `--deny <rule>` | Gate invocations; deny wins; repeatable |
-| `--sandbox <profile>` | Kernel filesystem and network profile; do not pass unless asked |
+`grok inspect` or `grok inspect --json` shows discovered skills, plugins, MCP servers, agents, permissions, and config.
 
-Known sandbox profiles in 1.0.5: `off` is unrestricted; `workspace` reads anywhere and writes CWD, `~/.grok`, and temp; `read-only` reads anywhere without project writes; `strict` reads CWD and system paths and can write CWD.
+Inspect does not enumerate built-in tool ids such as `image_gen`. Those stay available because the default invoke does not pass `--tools`. Never pass `--tools` to list tools: on this CLI it is a headless allowlist and drops everything else.
 
-Permission rules are not tool ids. Prefixes include `Bash(...)`, `Edit(...)`, `Write(...)`, `Read(...)`, `Grep(...)`, `WebFetch(...)`, and `MCPTool(...)`. `*` matches one path segment and `**` is recursive. A bare prefix matches all. Example: `--deny 'Bash(rm*)'`.
+For every built-in id captured from grok 1.0.30, read [grok-tools.md](grok-tools.md). If `grok --version` differs, ask Grok in the brief to list tools, or trust the live session.
 
-### Restricting tools
+## Models and turn caps
 
-Use these only when the user asked to restrict Grok.
+- `grok models`: live model list and default.
+- `--max-turns <n>`: cap model rounds in headless mode.
+- `--json-schema <schema>`: constrain the final answer; implies JSON output.
 
-| Flag | Use |
-|------|-----|
-| `--tools <ids>` | Headless allowlist, comma-separated |
-| `--disallowed-tools <ids>` | Remove built-ins in headless mode |
-| `--no-subagents` | Disable child agents |
-| `--disable-web-search` | Disable `web_search` and `web_fetch` |
-| `--no-plan` | Disable plan mode |
+## Media, X, web, subagents
 
-### Sessions and output
+Put the ask in the brief. Grok uses its tools when unrestricted:
 
-| Flag | Use |
-|------|-----|
-| `--output-format json` | Single object after completion |
-| `--output-format plain` | Human text on stdout |
-| `--output-format streaming-json` | NDJSON ACP events |
-| `--output-format streaming-messages-json` | NDJSON Messages API wire format |
-| `--json-schema <schema>` | Constrain final output to JSON Schema; implies JSON output |
-| `-r, --resume [<id-or-title>]` | Continue a session |
-| `-c, --continue` | Continue the latest session in this cwd |
-| `-s, --session-id <uuid>` | Force a new session id that does not already exist |
-| `--fork-session` | Fork when resuming or continuing |
+- Web: search the web and open pages.
+- X: `x_user_search`, `x_semantic_search`, `x_keyword_search`, `x_thread_fetch`.
+- Media: `image_gen`, `image_edit`, `image_to_video`, `reference_to_video`.
+- Subagents: `explore`, `plan`, `general-purpose`. Do not pass `--no-subagents` unless asked.
 
-Headless `-p` and `--prompt-file` do not create a git worktree from `--worktree`.
+## Restrict only when asked
+
+Do not add `--tools`, `--no-subagents`, `--disable-web-search`, `--disallowed-tools`, or `--sandbox` unless the user asked to restrict Grok. `--tools` is an allowlist. `--disallowed-tools` removes named ids and wins over `--tools`. `--sandbox` applies a kernel filesystem and network profile.
+
+## Stay out of skill recipes
+
+Do not teach these as consult recipes: `dashboard`, `leader`, `grok agent stdio`/`serve`, `cursor-worker`, `clone`, `wrap`, `plugin`, `mcp`, `memory`, `doctor`, `update`, `setup`, `trace`, `completions`, `--minimal`, `--fullscreen`.
