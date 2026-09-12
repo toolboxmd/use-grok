@@ -9,11 +9,18 @@ metadata:
 
 # Consult Grok
 
-Run the local `grok` CLI as a full agent. Grok can read and edit the repo, run a shell, search the web, and spawn subagents. Its answer is a proposal unless the user asked it to implement.
+Run the local `grok` CLI as a full agent. Grok can read and edit the repo, run a shell, search the web and open pages, search X, generate media, and spawn subagents (`explore` / `plan` / `general-purpose`). Its answer is a proposal unless the user asked it to implement.
 
 Invoke with `/use-grok` in Claude Code or Grok, `$use-grok` in Codex, or select the skill with `@` in ChatGPT. The host may also invoke it automatically when the user asks to consult Grok. Invocation arguments are the question; put them in the brief. Do not run unless the user asked to consult Grok.
 
 A path in the brief is a hint. Grok sees the workspace because `--cwd` points at it, not because a path was named.
+
+Ask for these in the brief. Do not reimplement them, and do not pass `--tools` unless the user asked to restrict Grok.
+
+- Web: Grok can search the web and open pages.
+- X: `x_user_search`, `x_semantic_search`, `x_keyword_search`, `x_thread_fetch`.
+- Media: `image_gen`, `image_edit`, `image_to_video`, `reference_to_video`. Put image and video asks in the brief; do not add an xAI Images REST client.
+- Subagents: Grok can spawn `explore`, `plan`, and `general-purpose` children. Do not pass `--no-subagents` unless the user asked to restrict Grok.
 
 ## Default invocation
 
@@ -41,7 +48,7 @@ Missing `grok` on PATH: tell the user to install Grok Build. Auth failure: `grok
 1. Wait for the shell command to return.
 2. Read the exit code.
 3. Parse JSON stdout (`--output-format json`).
-4. Treat `.text` as Grok's final answer (or the JSON string if you passed `--json-schema`).
+4. Treat `.text` as Grok's final answer (or the JSON string if you passed `--json-schema`). A truncated display is not the transcript; if `.text` is missing or incomplete, run `grok export "<sessionId>"`.
 5. Reconcile with the repo and the original task. Exit 0 does not mean the work is correct; it only means Grok stopped on its own. Do not silently replace a plan or merge edits unread.
 
 | Exit | Meaning |
@@ -79,7 +86,7 @@ Done when: <acceptance>
 
 ## Optional CLI details
 
-The default invocation above needs no additional catalog lookup. For non-default flags, tool restrictions, subagent types, models, sandbox profiles, or session controls, read [references/grok-cli.md](references/grok-cli.md). That reference records the Grok CLI 1.0.5 interface. If the installed version differs or a documented option fails, check the live `grok --help` and `grok models` output before proceeding.
+The default invocation above needs no additional catalog lookup. For when-to-use extras (cost, inspect, sessions, models, turn caps, structured output, restore-code, worktree), read [references/grok-cli.md](references/grok-cli.md). For every built-in tool id, read [references/grok-tools.md](references/grok-tools.md). Live `grok --help` and `~/.grok/docs/user-guide/` are authoritative when they differ. Never pass `--tools` to list tools.
 
 ## Recipes
 
@@ -87,7 +94,7 @@ Same default command. Change the brief (and flags only where noted).
 
 ### Research
 
-Goal `research`. Tell Grok to search the repo and the web, cite paths and URLs, and not edit files. It will use `web_search`, `web_fetch`, `grep`, and `explore` subagents on its own.
+Goal `research`. Tell Grok to search the repo and the web, cite paths and URLs, and not edit files. It will search, grep, and spawn `explore` subagents on its own.
 
 ```text
 Goal: research
@@ -137,6 +144,30 @@ If `--json-schema` is set, the review is in the JSON object (`.text` may be the 
 
 ### Continue a prior consult
 
+Linear follow-up uses `--resume` with the prior `.sessionId`.
+
 ```bash
 grok --prompt-file "<brief-path>" --verbatim --cwd "<workspace>" --always-approve --output-format json --resume "<sessionId>"
 ```
+
+### Alternate history
+
+Fork first. Then rewind only the child. Do not rewind the only copy: `/rewind` drops later conversation turns on that session (files on disk stay).
+
+Keep the source id. Headless `--fork-session` needs a prompt, so use a throwaway brief. After this command, the child id is JSON `.sessionId` (or the unused UUID you passed with `--session-id`). Do not rewind `<sourceSessionId>`.
+
+```bash
+grok --prompt-file "<throwaway-brief>" --verbatim --cwd "<workspace>" --always-approve --output-format json \
+  --resume "<sourceSessionId>" --fork-session
+```
+
+Optional `--session-id "<uuid>"` sets the child's id. `--session-id` sets a new unused UUID; it does not resume. With `-r`/`-c` it is valid only with `--fork-session`. `--worktree` is not combinable with `--fork-session`.
+
+`/rewind` (alias `/undo`) is a TUI slash command on the **child** only, not a `grok` CLI flag. It opens a rewind-point picker (one per user prompt; confirm if asked). After the child is rewound, send the real alternate brief with `--resume "<childSessionId>"`:
+
+```bash
+grok --prompt-file "<brief-path>" --verbatim --cwd "<workspace>" --always-approve --output-format json \
+  --resume "<childSessionId>"
+```
+
+The source stays resumable with `--resume "<sourceSessionId>"`.

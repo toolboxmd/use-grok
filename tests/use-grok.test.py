@@ -14,7 +14,12 @@ SKILL_ROOT = ROOT / "skills" / "use-grok"
 SKILL = (SKILL_ROOT / "SKILL.md").read_text(encoding="utf-8")
 FRONTMATTER = SKILL.split("---", 2)[1]
 REFERENCE = (SKILL_ROOT / "references/grok-cli.md").read_text(encoding="utf-8")
+TOOLS_DUMP = (SKILL_ROOT / "references/grok-tools.md").read_text(encoding="utf-8")
 README = (ROOT / "README.md").read_text(encoding="utf-8")
+LIVE_HELP_POLICY = (
+    "Live `grok --help` and `~/.grok/docs/user-guide/` are authoritative when they differ."
+)
+TOOLS_DUMP_STAMP = "grok 1.0.30 (04b7ffed98c6) [stable]"
 PLUGIN = json.loads((ROOT / ".codex-plugin/plugin.json").read_text(encoding="utf-8"))
 CLAUDE_PLUGIN = json.loads((ROOT / ".claude-plugin/plugin.json").read_text(encoding="utf-8"))
 GROK_PLUGIN = json.loads((ROOT / ".grok-plugin/plugin.json").read_text(encoding="utf-8"))
@@ -110,42 +115,130 @@ class UseGrokSkillTests(unittest.TestCase):
 
     def test_does_not_restrict_by_default(self) -> None:
         self.assertIn("Do **not** add `--no-subagents`", SKILL)
+        self.assertIn("Do **not** add `--no-subagents`, `--disable-web-search`, `--tools`", SKILL)
         self.assertNotIn("--deny Read", SKILL)
         self.assertNotIn("consult-grok", SKILL)
         self.assertNotIn("--mode explicit", SKILL)
         self.assertNotIn("Automatic review", SKILL)
 
-    def test_tool_and_flag_catalog_is_progressively_disclosed(self) -> None:
+    def test_hybrid_references_and_live_help_policy(self) -> None:
         self.assertIn("[references/grok-cli.md](references/grok-cli.md)", SKILL)
-        self.assertIn("Grok CLI 1.0.5", REFERENCE)
+        self.assertIn("[references/grok-tools.md](references/grok-tools.md)", SKILL)
+        self.assertIn(LIVE_HELP_POLICY, SKILL)
+        self.assertIn(LIVE_HELP_POLICY, REFERENCE)
+        self.assertIn(LIVE_HELP_POLICY, README)
+        self.assertNotIn("Grok CLI 1.0.5", SKILL)
+        self.assertNotIn("Grok CLI 1.0.5", REFERENCE)
+        self.assertNotIn("Grok CLI 1.0.5", README)
+        self.assertIn("Never pass `--tools` to list tools", SKILL)
+        self.assertIn("Never pass `--tools` to list tools", REFERENCE)
+        self.assertIn("Never pass `--tools` to list tools", TOOLS_DUMP)
+
+    def test_session_recipes_teach_resume_fork_rewind_and_export(self) -> None:
+        self.assertIn("### Continue a prior consult", SKILL)
+        self.assertIn("### Alternate history", SKILL)
+        self.assertIn("--resume \"<sessionId>\"", SKILL)
+        self.assertIn("--fork-session", SKILL)
+        self.assertIn("Do not rewind the only copy", SKILL)
+        self.assertIn("`/rewind`", SKILL)
+        self.assertIn("files on disk stay", SKILL)
+        self.assertIn("grok export \"<sessionId>\"", SKILL)
+        self.assertIn("`--session-id` sets a new unused UUID; it does not resume.", SKILL)
+        self.assertIn("JSON `.sessionId`", SKILL)
+        self.assertIn("--resume \"<childSessionId>\"", SKILL)
+        self.assertIn("--resume \"<sourceSessionId>\"", SKILL)
+        self.assertIn("throwaway", SKILL)
+        self.assertIn("TUI slash command", SKILL)
+        self.assertIn("`--worktree` is not combinable with `--fork-session`", SKILL)
+        self.assertIn("Auth failure: `grok login` or `XAI_API_KEY`.", SKILL)
+
+    def test_named_x_media_and_subagent_teaching(self) -> None:
         for tool in (
+            "x_user_search",
+            "x_semantic_search",
+            "x_keyword_search",
+            "x_thread_fetch",
+            "image_gen",
+            "image_edit",
+            "image_to_video",
+            "reference_to_video",
+        ):
+            self.assertIn(f"`{tool}`", SKILL)
+        for kind in ("explore", "plan", "general-purpose"):
+            self.assertIn(f"`{kind}`", SKILL)
+        self.assertIn("search the web and open pages", SKILL)
+        self.assertNotIn("open_page", SKILL)
+        self.assertNotIn("open_page_with_find", SKILL)
+        self.assertNotIn("api.x.ai", SKILL)
+        self.assertNotIn("images/generations", SKILL)
+
+    def test_when_to_use_map_covers_inspect_usage_and_session_controls(self) -> None:
+        self.assertIn("`grok usage <sessionId>`", REFERENCE)
+        self.assertIn("`grok inspect`", REFERENCE)
+        self.assertIn("`grok inspect --json`", REFERENCE)
+        self.assertIn("`grok sessions list`", REFERENCE)
+        self.assertIn("`grok sessions search", REFERENCE)
+        self.assertIn("`grok models`", REFERENCE)
+        self.assertIn("`--max-turns", REFERENCE)
+        self.assertIn("`--json-schema", REFERENCE)
+        self.assertIn("`--restore-code`", REFERENCE)
+        self.assertIn("`--worktree`", REFERENCE)
+        self.assertIn("not combinable with `--fork-session`", REFERENCE)
+        self.assertIn("`--sandbox`", REFERENCE)
+        self.assertIn("`--disallowed-tools`", REFERENCE)
+        for kind in ("general-purpose", "explore", "plan"):
+            self.assertIn(f"`{kind}`", REFERENCE)
+
+    def test_tools_dump_has_provenance_stamp_and_builtin_ids(self) -> None:
+        self.assertIn(TOOLS_DUMP_STAMP, TOOLS_DUMP)
+        self.assertIn(TOOLS_DUMP_STAMP, REFERENCE)
+        self.assertIn("Compare `grok --version` to `1.0.30 (04b7ffed98c6)`", TOOLS_DUMP)
+        self.assertIn("`[stable]` is channel metadata", TOOLS_DUMP)
+        self.assertIn("If the version or git hash differs, this list may be incomplete", TOOLS_DUMP)
+        self.assertIn("Machine-local MCP servers are omitted", TOOLS_DUMP)
+        for tool in (
+            "web_search",
+            "open_page",
+            "open_page_with_find",
+            "web_fetch",
+            "x_user_search",
+            "x_semantic_search",
+            "x_keyword_search",
+            "x_thread_fetch",
             "read_file",
             "search_replace",
+            "write",
             "grep",
             "list_dir",
             "run_terminal_command",
-            "web_search",
-            "web_fetch",
-            "todo_write",
+            "get_command_or_subagent_output",
+            "kill_command_or_subagent",
+            "monitor",
+            "image_gen",
+            "image_edit",
+            "image_to_video",
+            "reference_to_video",
             "spawn_subagent",
-            "memory_search",
+            "todo_write",
+            "ask_user_question",
+            "enter_plan_mode",
+            "exit_plan_mode",
+            "workflow",
+            "search_tool",
+            "use_tool",
+            "scheduler_create",
+            "scheduler_delete",
+            "scheduler_list",
+            "send_feedback",
         ):
-            self.assertIn(tool, REFERENCE)
-        for flag in (
-            "--max-turns",
-            "--json-schema",
-            "--resume",
-            "--sandbox",
-            "--disallowed-tools",
-            "--reasoning-effort",
-        ):
-            self.assertIn(flag, REFERENCE)
-        for kind in ("general-purpose", "explore", "plan"):
-            self.assertIn(kind, REFERENCE)
+            self.assertIn(f"`{tool}`", TOOLS_DUMP)
+        self.assertIn("Do not treat `code_interpreter`, LSP tools, or `memory_search` as guaranteed", TOOLS_DUMP)
 
     def test_repository_text_follows_global_style(self) -> None:
         self.assertNotIn("\N{EM DASH}", SKILL)
         self.assertNotIn("\N{EM DASH}", README)
+        self.assertNotIn("\N{EM DASH}", REFERENCE)
+        self.assertNotIn("\N{EM DASH}", TOOLS_DUMP)
 
     def test_goal_recipes_exist(self) -> None:
         for heading in (
@@ -153,6 +246,7 @@ class UseGrokSkillTests(unittest.TestCase):
             "### Implement / coding",
             "### Review / second opinion",
             "### Continue a prior consult",
+            "### Alternate history",
         ):
             self.assertIn(heading, SKILL)
         self.assertIn("Goal: research", SKILL)
