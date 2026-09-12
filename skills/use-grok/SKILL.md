@@ -152,13 +152,22 @@ grok --prompt-file "<brief-path>" --verbatim --cwd "<workspace>" --always-approv
 
 ### Alternate history
 
-Fork first. Then rewind only the fork. Do not rewind the only copy: `/rewind` drops later conversation turns on that session (files on disk stay).
+Fork first. Then rewind only the child. Do not rewind the only copy: `/rewind` drops later conversation turns on that session (files on disk stay).
+
+Keep the source id. Headless `--fork-session` needs a prompt, so use a throwaway brief. After this command, the child id is JSON `.sessionId` (or the unused UUID you passed with `--session-id`). Do not rewind `<sourceSessionId>`.
+
+```bash
+grok --prompt-file "<throwaway-brief>" --verbatim --cwd "<workspace>" --always-approve --output-format json \
+  --resume "<sourceSessionId>" --fork-session
+```
+
+Optional `--session-id "<uuid>"` sets the child's id. `--session-id` sets a new unused UUID; it does not resume. With `-r`/`-c` it is valid only with `--fork-session`. `--worktree` is not combinable with `--fork-session`.
+
+`/rewind` (alias `/undo`) is a TUI slash command on the **child** only, not a `grok` CLI flag. It opens a rewind-point picker (one per user prompt; confirm if asked). After the child is rewound, send the real alternate brief with `--resume "<childSessionId>"`:
 
 ```bash
 grok --prompt-file "<brief-path>" --verbatim --cwd "<workspace>" --always-approve --output-format json \
-  --resume "<sessionId>" --fork-session
+  --resume "<childSessionId>"
 ```
 
-Optional `--session-id "<uuid>"` names the child. `-s/--session-id` creates a new UUID only. With `-r`/`-c` it is valid only with `--fork-session`. `--worktree` is not combinable with `--fork-session`.
-
-In the **forked** session, run `/rewind` (alias `/undo`) and pick an earlier user prompt. That truncates conversation history on the fork only. The source session keeps later history and stays resumable with `--resume "<sourceSessionId>"`.
+The source stays resumable with `--resume "<sourceSessionId>"`.

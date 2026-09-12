@@ -126,6 +126,7 @@ class UseGrokSkillTests(unittest.TestCase):
         self.assertIn("[references/grok-tools.md](references/grok-tools.md)", SKILL)
         self.assertIn(LIVE_HELP_POLICY, SKILL)
         self.assertIn(LIVE_HELP_POLICY, REFERENCE)
+        self.assertIn(LIVE_HELP_POLICY, README)
         self.assertNotIn("Grok CLI 1.0.5", SKILL)
         self.assertNotIn("Grok CLI 1.0.5", REFERENCE)
         self.assertNotIn("Grok CLI 1.0.5", README)
@@ -142,7 +143,12 @@ class UseGrokSkillTests(unittest.TestCase):
         self.assertIn("`/rewind`", SKILL)
         self.assertIn("files on disk stay", SKILL)
         self.assertIn("grok export \"<sessionId>\"", SKILL)
-        self.assertIn("creates a new UUID only", SKILL)
+        self.assertIn("`--session-id` sets a new unused UUID; it does not resume.", SKILL)
+        self.assertIn("JSON `.sessionId`", SKILL)
+        self.assertIn("--resume \"<childSessionId>\"", SKILL)
+        self.assertIn("--resume \"<sourceSessionId>\"", SKILL)
+        self.assertIn("throwaway", SKILL)
+        self.assertIn("TUI slash command", SKILL)
         self.assertIn("`--worktree` is not combinable with `--fork-session`", SKILL)
         self.assertIn("Auth failure: `grok login` or `XAI_API_KEY`.", SKILL)
 
@@ -186,7 +192,9 @@ class UseGrokSkillTests(unittest.TestCase):
     def test_tools_dump_has_provenance_stamp_and_builtin_ids(self) -> None:
         self.assertIn(TOOLS_DUMP_STAMP, TOOLS_DUMP)
         self.assertIn(TOOLS_DUMP_STAMP, REFERENCE)
-        self.assertIn("If `grok --version` differs, this list may be incomplete", TOOLS_DUMP)
+        self.assertIn("Compare `grok --version` to `1.0.30 (04b7ffed98c6)`", TOOLS_DUMP)
+        self.assertIn("`[stable]` is channel metadata", TOOLS_DUMP)
+        self.assertIn("If the version or git hash differs, this list may be incomplete", TOOLS_DUMP)
         self.assertIn("Machine-local MCP servers are omitted", TOOLS_DUMP)
         for tool in (
             "web_search",

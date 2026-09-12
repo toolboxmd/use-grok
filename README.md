@@ -10,7 +10,7 @@ The skill targets local Codex and Claude Code environments where `grok` is insta
 
 - `.codex-plugin/plugin.json`, `.claude-plugin/plugin.json`, `.grok-plugin/plugin.json`: plugin identity on Codex, Claude Code, and Grok Build.
 - `skills/use-grok/SKILL.md`: when to consult Grok, default command, completion rules, session recipes, and goal recipes.
-- `skills/use-grok/references/grok-cli.md`: when-to-use map for continuation, inspect, usage, and related flags. Live `grok --help` wins when it differs.
+- `skills/use-grok/references/grok-cli.md`: when-to-use map for continuation, inspect, usage, and related flags. Live `grok --help` and `~/.grok/docs/user-guide/` are authoritative when they differ.
 - `skills/use-grok/references/grok-tools.md`: pinned built-in tool dump as of grok 1.0.30.
 - `skills/use-grok/agents/openai.yaml`: Codex / ChatGPT skill display name and implicit-invocation policy.
 - `tests/use-grok.test.py`: plugin, portable frontmatter, and workflow contracts.

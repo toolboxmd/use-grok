@@ -1,6 +1,6 @@
 # Grok CLI when-to-use
 
-Last checked against `grok 1.0.30 (04b7ffed98c6) [stable]`. This is a when-to-use map, not a flag dump and not a supported-version contract. Live `grok --help` and `~/.grok/docs/user-guide/` are authoritative when they differ. Run `grok <cmd> --help` for a named subcommand.
+Last checked against `grok 1.0.30 (04b7ffed98c6) [stable]`. Compare `grok --version` to `1.0.30 (04b7ffed98c6)`; `[stable]` is channel metadata and is not part of `grok --version` output. This is a when-to-use map, not a flag dump and not a supported-version contract. Live `grok --help` and `~/.grok/docs/user-guide/` are authoritative when they differ. Run `grok <cmd> --help` for a named subcommand.
 
 The default consult in `SKILL.md` needs none of the extras below.
 
@@ -12,11 +12,15 @@ Find a session: `grok sessions list` or `grok sessions search <query>`.
 
 ## Alternate history
 
-Fork with `--resume "<sessionId>" --fork-session`. Optional `--session-id "<uuid>"` names the child. Then rewind **only the fork** with `/rewind` (alias `/undo`).
+Keep the source id. Fork with `--resume "<sourceSessionId>" --fork-session` and a throwaway prompt (headless requires a prompt). The child id is JSON `.sessionId`, or the unused UUID from optional `--session-id`. Then rewind **only the child**.
+
+`/rewind` (alias `/undo`) is a TUI slash command on that child, not a CLI flag. It opens a rewind-point picker. Do not rewind the source.
 
 Do not rewind the only copy. `/rewind` truncates conversation history to an earlier user prompt; files on disk stay. See `~/.grok/docs/user-guide/17-sessions.md`.
 
-`-s/--session-id` creates a new UUID only. With `-r`/`-c` it is valid only with `--fork-session`.
+Then `--resume "<childSessionId>"` with the real alternate brief. The source stays resumable with `--resume "<sourceSessionId>"`.
+
+`--session-id` sets a new unused UUID; it does not resume. With `-r`/`-c` it is valid only with `--fork-session`.
 
 `--worktree` starts the session in a new git worktree. It is not combinable with `--fork-session`. `--restore-code` restores the original session's repository snapshot when resuming (remote sessions require `--worktree`).
 
@@ -34,7 +38,7 @@ JSON `.text` is the final answer. If the TUI or stdout looks truncated, run `gro
 
 Inspect does not enumerate built-in tool ids such as `image_gen`. Those stay available because the default invoke does not pass `--tools`. Never pass `--tools` to list tools: on this CLI it is a headless allowlist and drops everything else.
 
-For every built-in id captured from grok 1.0.30, read [grok-tools.md](grok-tools.md). If `grok --version` differs, ask Grok in the brief to list tools, or trust the live session.
+For every built-in id captured from grok 1.0.30, read [grok-tools.md](grok-tools.md). If the live version or git hash differs from `1.0.30 (04b7ffed98c6)`, ask Grok in the brief to list tools, or trust the live session.
 
 ## Models and turn caps
 

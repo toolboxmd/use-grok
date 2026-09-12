@@ -1,6 +1,6 @@
 # Grok built-in tools
 
-Pinned dump of built-in agent tools captured from `grok 1.0.30 (04b7ffed98c6) [stable]`. If `grok --version` differs, this list may be incomplete. Never pass `--tools` to list tools; on this CLI it is an allowlist and requires a value, and passing it drops everything else.
+Pinned dump of built-in agent tools captured from `grok 1.0.30 (04b7ffed98c6) [stable]`. Compare `grok --version` to `1.0.30 (04b7ffed98c6)`; `[stable]` is channel metadata and is not part of `grok --version` output. If the version or git hash differs, this list may be incomplete. Never pass `--tools` to list tools; on this CLI it is an allowlist and requires a value, and passing it drops everything else.
 
 Machine-local MCP servers are omitted. For skills, plugins, and MCP, run `grok inspect --json`.
 
